@@ -99,8 +99,8 @@ function initializeColorPicker() {
             sendTimeout = setTimeout(function(){              
               var myJson = JSON.stringify({
                 red: pixel[0],
-                blue: pixel[1],
-                green: pixel[2]
+                green: pixel[1],
+                blue: pixel[2]
               });
               socket.send(myJson);
             }, 10);
