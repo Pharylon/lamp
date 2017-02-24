@@ -3,7 +3,12 @@ var WebSocketServer = require('websocket').server;
 var http = require('http');
 var fs = require('fs');
 var PythonShell = require('python-shell');
+var path = require('path');
 
+var devEnvironment = process.env.NODE_ENV === "development";
+
+var port = devEnvironment ? 8081 : 80;
+var pythonFile = path.join("python", devEnvironment ? "print.py" : "lamp.py");
 
  
 var server = http.createServer(function(request, response) {
@@ -30,8 +35,8 @@ var server = http.createServer(function(request, response) {
   });
 
 });
-server.listen(8081, function() {
-    console.log((new Date()) + ' Server is listening on port 8080');
+server.listen(port, function() {
+    console.log((new Date()) + ' Server is listening on port ' + port);
 });
  
 wsServer = new WebSocketServer({
@@ -72,23 +77,30 @@ wsServer.on('request', function(request) {
     // echoConnection.on('close', function(reasonCode, description) {
     //     console.log((new Date()) + ' Peer ' + echoConnection.remoteAddress + ' disconnected (Echo).');
     // });
+    
+    try{
+      var lampConnection = request.accept('lamp', request.origin);
+      console.log((new Date()) + ' Lamp Connection accepted.');
+      lampConnection.on('message', function(message) {
+          if (message.type === 'utf8') {
+              var rgb = JSON.parse(message.utf8Data);
+              PythonShell.run(pythonFile, {args: [rgb.red, rgb.green, rgb.blue]}, function (err, results) {
+                if (err) throw err;
+                // results is an array consisting of messages collected during execution
+                console.log('results: %j', results);
+              });
+              //lampConnection.sendUTF(message.utf8Data);
+          }
+      });
+      lampConnection.on('close', function(reasonCode, description) {
+          console.log((new Date()) + ' Peer ' + lampConnection.remoteAddress + ' disconnected (from Lamp).');
+      });
+    }
+    catch(err){
+      console.log(err);
+    }
 
-    var lampConnection = request.accept('lamp', request.origin);
-    console.log((new Date()) + ' Lamp Connection accepted.');
-    lampConnection.on('message', function(message) {
-        if (message.type === 'utf8') {
-            var rgb = JSON.parse(message.utf8Data);
-            PythonShell.run('lamp.py', {args: [rgb.red, rgb.green, rgb.blue]}, function (err, results) {
-              if (err) throw err;
-              // results is an array consisting of messages collected during execution
-              console.log('results: %j', results);
-            });
-            //lampConnection.sendUTF(message.utf8Data);
-        }
-    });
-    lampConnection.on('close', function(reasonCode, description) {
-        console.log((new Date()) + ' Peer ' + lampConnection.remoteAddress + ' disconnected (from Lamp).');
-    });
+    
 });
 
 
