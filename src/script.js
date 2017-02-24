@@ -103,7 +103,7 @@ function initializeColorPicker() {
                 blue: pixel[2]
               });
               socket.send(myJson);
-            }, 10);
+            }, 100);
             
 
             var dColor = pixel[2] + 256 * pixel[1] + 65536 * pixel[0];
