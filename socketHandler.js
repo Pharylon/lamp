@@ -52,9 +52,13 @@ module.exports = {
           if (message.type === 'utf8') {
             var rgb = JSON.parse(message.utf8Data);
             PythonShell.run(pythonFile, { args: [rgb.red, rgb.green, rgb.blue] }, function (err, results) {
-              if (err) throw console.error(err);
-              // results is an array consisting of messages collected during execution
-              console.log('results: %j', results);
+              if (err){
+                console.error(err)
+              }
+              else{
+                // results is an array consisting of messages collected during execution
+                console.log('results: %j', results);
+              }              
             });
             //lampConnection.sendUTF(message.utf8Data);
           }
