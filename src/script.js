@@ -10,6 +10,8 @@ function initizialize(){
   initStopBtn();
 }
 
+var sendTimeout;
+
 // function initializeColorPicker(){
 //   ColorPicker(
 //   document.getElementById('slide'),
@@ -92,12 +94,17 @@ function initializeColorPicker() {
             setinputValue("bVal", pixel[2]);
             setinputValue("rgbVal", pixel[0] + ',' + pixel[1] + ',' + pixel[2]);
 
-            var myJson = JSON.stringify({
-              red: pixel[0],
-              blue: pixel[1],
-              green: pixel[2]
-            });
-            socket.send(myJson);
+            
+            clearTimeout(sendTimeout);
+            sendTimeout = setTimeout(function(){              
+              var myJson = JSON.stringify({
+                red: pixel[0],
+                blue: pixel[1],
+                green: pixel[2]
+              });
+              socket.send(myJson);
+            }, 10);
+            
 
             var dColor = pixel[2] + 256 * pixel[1] + 65536 * pixel[0];
             setinputValue("hexVal", '#' + ('0000' + dColor.toString(16)).substr(-6));
