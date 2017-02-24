@@ -6,8 +6,8 @@ pi = pigpio.pi()
 script, red, green, blue = argv
 
 redPin = 17
-greenPin = 22
-bluePin = 24
+greenPin = 24
+bluePin = 22
 
 if (red == 0 and blue == 0 and green == 0):
   pi.stop()
