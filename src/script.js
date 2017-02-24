@@ -35,11 +35,12 @@ function initStopBtn(){
   }
 }
 
+var bCanPreview = true; // can preview
+
+
 function initializeColorPicker() {
 
     var picker = document.getElementById("picker");
-
-    var bCanPreview = true; // can preview
 
     // create canvas and context objects
     var canvas = document.getElementById('picker');
@@ -69,47 +70,8 @@ function initializeColorPicker() {
     }
     image.src = imageSrc;
 
-    picker.onmousemove = function (e) {
-        if (bCanPreview) {
-            // get coordinates of current position
-            var canvasOffset = getOffSet(canvas);// $(canvas).offset();
-            var canvasX = Math.floor(e.pageX - canvasOffset.left);
-            var canvasY = Math.floor(e.pageY - canvasOffset.top);
-
-            var totalOffset = getOffSet(canvas);
-
-            // get current pixel
-            var imageData = ctx.getImageData(canvasX, canvasY, 1, 1);
-            var pixel = imageData.data;
-
-            // update preview color
-            var pixelColor = "rgb(" + pixel[0] + ", " + pixel[1] + ", " + pixel[2] + ")";
-
-            document.getElementById("preview").style.backgroundColor = pixelColor;
-
-
-            // update controls
-            setinputValue("rVal", pixel[0]);
-            setinputValue("gVal", pixel[1]);
-            setinputValue("bVal", pixel[2]);
-            setinputValue("rgbVal", pixel[0] + ',' + pixel[1] + ',' + pixel[2]);
-
-            
-            clearTimeout(sendTimeout);
-            sendTimeout = setTimeout(function(){              
-              var myJson = JSON.stringify({
-                red: pixel[0],
-                green: pixel[1],
-                blue: pixel[2]
-              });
-              socket.send(myJson);
-            }, 100);
-            
-
-            var dColor = pixel[2] + 256 * pixel[1] + 65536 * pixel[0];
-            setinputValue("hexVal", '#' + ('0000' + dColor.toString(16)).substr(-6));
-        }
-    }
+    picker.onmousemove = handleSelection;
+    picker.ontouchmove = handleSelection;
 
     picker.onclick = function (e) {
         bCanPreview = !bCanPreview;
@@ -119,6 +81,50 @@ function initializeColorPicker() {
 function setinputValue(id, value) {
     var input = document.getElementById(id);
     input.value = value;
+}
+
+function handleSelection(e){
+  if (bCanPreview) {
+    var canvas = document.getElementById('picker');
+    var ctx = canvas.getContext('2d');
+    // get coordinates of current position
+    var canvasOffset = getOffSet(canvas);// $(canvas).offset();
+    var canvasX = Math.floor(e.pageX - canvasOffset.left);
+    var canvasY = Math.floor(e.pageY - canvasOffset.top);
+
+    var totalOffset = getOffSet(canvas);
+
+    // get current pixel
+    var imageData = ctx.getImageData(canvasX, canvasY, 1, 1);
+    var pixel = imageData.data;
+
+    // update preview color
+    var pixelColor = "rgb(" + pixel[0] + ", " + pixel[1] + ", " + pixel[2] + ")";
+
+    document.getElementById("preview").style.backgroundColor = pixelColor;
+
+
+    // update controls
+    setinputValue("rVal", pixel[0]);
+    setinputValue("gVal", pixel[1]);
+    setinputValue("bVal", pixel[2]);
+    setinputValue("rgbVal", pixel[0] + ',' + pixel[1] + ',' + pixel[2]);
+
+    
+    clearTimeout(sendTimeout);
+    sendTimeout = setTimeout(function(){              
+      var myJson = JSON.stringify({
+        red: pixel[0],
+        green: pixel[1],
+        blue: pixel[2]
+      });
+      socket.send(myJson);
+    }, 100);
+            
+
+    var dColor = pixel[2] + 256 * pixel[1] + 65536 * pixel[0];
+    setinputValue("hexVal", '#' + ('0000' + dColor.toString(16)).substr(-6));
+  }
 }
 
 function getOffSet(element) {
