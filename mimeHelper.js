@@ -14,7 +14,10 @@ module.exports = function getMimeType(url){
     if (extension === "css"){
       return "text/css";
     }
-    return "text/plain"
+    if (extension === "css"){
+      return "text/css";
+    }
+    return "image/png"
   }
   
 }

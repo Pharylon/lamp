@@ -11,28 +11,32 @@ var port = 8081// = devEnvironment ? 8081 : 80;
 
  
 var server = http.createServer(function(request, response) {
-  var file = "src";
+  var fileName = "src";
   if (request.url.length === 0 || request.url === "/"){
-    file += "/index.html";
+    fileName += "/index.html";
   }
   else{
-    file += request.url;
+    fileName += request.url;
   }
-  var mimeType = mimeHelper(file);
+  var mimeType = mimeHelper(fileName);
 
-  fs.readFile(file, function(err, data){
+  fs.readFile(fileName, function(err, data){
     if (err){
        console.error(err);
        response.writeHead(404);
        response.end();
     }
-    else{
+    else{      
       response.writeHead(200, {'Content-Type': mimeType});
-      response.end(data.toString());
-    }
-    
+      if (mimeType.indexOf("text") > -1){
+        response.end(data.toString());
+      }
+      else{
+        response.end(data);
+      }
+      
+    }    
   });
-
 });
 server.listen(port, function() {
     console.log((new Date()) + ' Server is listening on port ' + port);
