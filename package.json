@@ -1,0 +1,15 @@
+{
+  "name": "lamp",
+  "version": "2.0.0",
+  "description": "Node Server for Lamp Control",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "author": "Zachary Shuford",
+  "license": "ISC",
+  "dependencies": {
+    "python-shell": "^0.4.0",
+    "websocket": "^1.0.24"
+  }
+}
