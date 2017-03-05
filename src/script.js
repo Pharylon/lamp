@@ -8,9 +8,6 @@ function initizialize(){
   socket = new WebSocket(socketAddress, "lamp");
   initializeColorPicker();  
   initStopBtn();
-  document.getElementById("color2").input = function(e){
-      console.log("test");
-}
 }
 
 var sendTimeout;
@@ -70,8 +67,9 @@ function handleSelection(e){
     var ctx = canvas.getContext('2d');
     // get coordinates of current position
     var canvasOffset = getOffSet(canvas);// $(canvas).offset();
-    var canvasX = Math.floor(e.pageX - canvasOffset.left);
-    var canvasY = Math.floor(e.pageY - canvasOffset.top);
+    var coordinates = getCoordinates(e);
+    var canvasX = Math.floor(coordinates.x - canvasOffset.left);
+    var canvasY = Math.floor(coordinates.y - canvasOffset.top);
 
     var totalOffset = getOffSet(canvas);
 
@@ -102,9 +100,26 @@ function handleSelection(e){
       socket.send(myJson);
     }, 20);
             
+    console.log(e);
 
     var dColor = pixel[2] + 256 * pixel[1] + 65536 * pixel[0];
     setinputValue("hexVal", '#' + ('0000' + dColor.toString(16)).substr(-6));
+}
+
+function getCoordinates(e){
+    if (e.type === "mousemove"){
+        return{
+            y: e.pageY,
+            x: e.pageX 
+        }
+    }
+    else if (e.touches){
+        var t = e.touches[0];
+        return{
+            x: t.pageX,
+            y: t.pageY
+        }
+    }
 }
 
 function getOffSet(elem) {
