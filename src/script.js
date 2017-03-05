@@ -73,9 +73,6 @@ function initializeColorPicker() {
     picker.onmousemove = handleSelection;
     picker.ontouchmove = handleSelection;
 
-    picker.onclick = function (e) {
-        bCanPreview = !bCanPreview;
-    }
 }
 
 function setinputValue(id, value) {
