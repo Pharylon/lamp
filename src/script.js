@@ -8,24 +8,12 @@ function initizialize(){
   socket = new WebSocket(socketAddress, "lamp");
   initializeColorPicker();  
   initStopBtn();
+  document.getElementById("color2").input = function(e){
+      console.log("test");
+}
 }
 
 var sendTimeout;
-
-// function initializeColorPicker(){
-//   ColorPicker(
-//   document.getElementById('slide'),
-//   document.getElementById('picker'),
-//   function(hex, hsv, rgb) {
-//     document.body.style.backgroundColor = hex;
-//     var myJson = JSON.stringify({
-//       red: rgb.r,
-//       blue: rgb.b,
-//       green: rgb.g
-//     });
-//     socket.send(myJson);
-//   });
-// }
 
 function initStopBtn(){
   var btn = document.getElementById("stopbtn");
@@ -34,8 +22,6 @@ function initStopBtn(){
     socket.send(offJson);
   }
 }
-
-var bCanPreview = true; // can preview
 
 
 function initializeColorPicker() {
@@ -72,10 +58,6 @@ function initializeColorPicker() {
 
     picker.onmousemove = handleSelection;
     picker.ontouchmove = handleSelection;
-
-    picker.onclick = function (e) {
-        bCanPreview = !bCanPreview;
-    }
 }
 
 function setinputValue(id, value) {
@@ -84,7 +66,6 @@ function setinputValue(id, value) {
 }
 
 function handleSelection(e){
-  if (bCanPreview) {
     var canvas = document.getElementById('picker');
     var ctx = canvas.getContext('2d');
     // get coordinates of current position
@@ -124,58 +105,7 @@ function handleSelection(e){
 
     var dColor = pixel[2] + 256 * pixel[1] + 65536 * pixel[0];
     setinputValue("hexVal", '#' + ('0000' + dColor.toString(16)).substr(-6));
-  }
 }
-
-function getOffSet(element) {
-    var leftOffset = element.offsetLeft;
-    var topOffSet = element.offsetTop;
-    var parent = element.parentElement;
-    if (parent.tagName != "BODY") {
-        var parentOffset = getOffSet(parent);
-        if (parentOffset.left !== leftOffset || parentOffset.top !== topOffSet) {
-
-        }
-
-    }
-    return {
-        left: leftOffset,
-        top: topOffSet
-    }
-}
-
-function getOffSetOld(elem) {
-
-    if (!elem || !elem.ownerDocument) {
-        return null;
-    }
-
-    if (elem === elem.ownerDocument.body) {
-        return jQuery.offset.bodyOffset(elem);
-    }
-
-    try {
-        box = elem.getBoundingClientRect();
-    } catch (e) { }
-
-    var doc = elem.ownerDocument,
-        docElem = doc.documentElement;
-
-    // Make sure we're not dealing with a disconnected DOM node
-    if (!box || !jQuery.contains(docElem, elem)) {
-        return box || { top: 0, left: 0 };
-    }
-
-    var body = doc.body,
-        win = getWindow(doc),
-        clientTop = docElem.clientTop || body.clientTop || 0,
-        clientLeft = docElem.clientLeft || body.clientLeft || 0,
-        top = box.top + scrollTop - clientTop,
-        left = box.left + scrollLeft - clientLeft;
-
-    return { top: top, left: left };
-};
-
 
 function getOffSet(elem) {
     if (!elem) {
