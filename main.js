@@ -4,6 +4,7 @@ var fs = require('fs');
 var path = require('path');
 var socketBuilder = require('./socketHandler');
 var mimeHelper = require('./mimeHelper');
+var heartBeat = require("./heartbeat.js");
 
 var devEnvironment = process.env.NODE_ENV === "development";
 
