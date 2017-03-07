@@ -5,7 +5,7 @@ var devEnvironment = process.env.NODE_ENV === "development";
 var pythonFile = path.join("python", devEnvironment ? "print.py" : "lamp.py");
 
 //Set color to red at boot
-PythonShell.run(pythonFile, { args: [255, 0, 0] });
+PythonShell.run(pythonFile, { args: [0, 255, 0] }, function(){});
 
 module.exports = {
   createSocket: function (server) {
