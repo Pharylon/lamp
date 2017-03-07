@@ -11,14 +11,16 @@ var port = 5000;
 
  
 var server = http.createServer(function(request, response) {
-  var fileName = "src";
+  var fileName = path.join(__dirname, "src");
   if (request.url.length === 0 || request.url === "/"){
-    fileName += "/index.html";
+    fileName = path.join(fileName, "index.html");
   }
   else{
-    fileName += request.url;
+    fileName = path.join(fileName, request.url);
   }
   var mimeType = mimeHelper(fileName);
+  console.log(__dirname);
+  console.log(fileName);
 
   fs.readFile(fileName, function(err, data){
     if (err){
