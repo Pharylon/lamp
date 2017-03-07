@@ -1,0 +1,10 @@
+#!/bin/bash
+
+git fetch origin
+#reslog=$(git log HEAD..origin/master --oneline)
+if [[ "${behind}" != "" ]] ; then
+  #git merge origin/master # completing the pull
+  echo "Up to Date"
+else
+  echo "Not Up to Date"
+fi
