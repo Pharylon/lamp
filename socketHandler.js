@@ -6,7 +6,7 @@ var pythonFile = path.join("python", devEnvironment ? "print.py" : "lamp.py");
 
 
 //Set color to red at boot
-PythonShell.run(pythonFile, { args: [1, 0, 0] }, function(){});
+PythonShell.run(pythonFile, { args: [2, 0, 0] }, function(){});
 
 module.exports = {
   createSocket: function (server) {
