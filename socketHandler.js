@@ -4,6 +4,9 @@ var path = require('path');
 var devEnvironment = process.env.NODE_ENV === "development";
 var pythonFile = path.join("python", devEnvironment ? "print.py" : "lamp.py");
 
+//Set color to red at boot
+PythonShell.run(pythonFile, { args: [255, 0, 0] });
+
 module.exports = {
   createSocket: function (server) {
     wsServer = new WebSocketServer({
@@ -28,22 +31,6 @@ module.exports = {
         console.log((new Date()) + ' Connection from origin ' + request.origin + ' rejected.');
         return;
       }
-
-      // var echoConnection = request.accept('echo-protocol', request.origin);
-      // console.log((new Date()) + ' Echo Connection accepted.');
-      // echoConnection.on('message', function(message) {
-      //     if (message.type === 'utf8') {
-      //         console.log('Received Message: ' + message.utf8Data);
-      //         echoConnection.sendUTF(message.utf8Data);
-      //     }
-      //     else if (message.type === 'binary') {
-      //         console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
-      //         echoConnection.sendBytes(message.binaryData);
-      //     }
-      // });
-      // echoConnection.on('close', function(reasonCode, description) {
-      //     console.log((new Date()) + ' Peer ' + echoConnection.remoteAddress + ' disconnected (Echo).');
-      // });
 
       try {
         var lampConnection = request.accept('lamp', request.origin);
