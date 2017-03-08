@@ -7,9 +7,13 @@ var ifaces = os.networkInterfaces();
 
 module.exports = function(){
   getIp(function(ip){
+    if (!ip){
+      return false;
+    }
     var myPath = path + "?ip=" + ip;
     console.log("Sending heartbeat to " + myPath);
     request.get(myPath);
+    return true;
   });  
 }
 
