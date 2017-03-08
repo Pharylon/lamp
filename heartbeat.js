@@ -37,5 +37,4 @@ function getIp(callback){
     ++alias;
   });
 });
-  return address;
 }
