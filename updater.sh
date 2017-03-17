@@ -8,3 +8,4 @@ if (git status | grep behind -q); then
   git merge origin/master # completing the pull
   /etc/init.d/lamp start
 fi
+node .\beatit.js

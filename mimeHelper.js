@@ -18,6 +18,5 @@ module.exports = function getMimeType(url){
       return "text/css";
     }
     return "image/png"
-  }
-  
+  }  
 }
