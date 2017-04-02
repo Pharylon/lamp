@@ -6,10 +6,7 @@ git fetch origin
 if (git status | grep behind -q); then
   /etc/init.d/lamp stop  
   git merge #origin/master # completing the pull
-<<<<<<< HEAD
-=======
   npm install
->>>>>>> rc
   /etc/init.d/lamp start
 fi
 /usr/bin/node /home/pi/Projects/lamp/beatit.js
