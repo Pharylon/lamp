@@ -10,6 +10,12 @@
   "license": "ISC",
   "dependencies": {
     "python-shell": "^0.4.0",
+    "request": "^2.81.0",
     "websocket": "^1.0.24"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.1.2",
+    "eslint-plugin-import": "^2.2.0"
   }
 }

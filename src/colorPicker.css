@@ -79,3 +79,13 @@ header a, a:visited {
     height: 30px;
     width: 30px;
 }
+
+.select{
+    text-align: center;
+    align-content: center;
+    font-size: 1.5em;
+}
+
+#mode-select{
+    font: inherit;
+}
