@@ -29,7 +29,6 @@ var myExport = {
 
     getTemperaturColors: function (callback) {
         myExport.getTemperature(function (temp) {
-            temp = 85;
             temp = Math.round(temp);
             if (temp > breakPoints[0].min) {
                 callback(breakPoints[0]);
