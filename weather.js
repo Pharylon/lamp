@@ -33,6 +33,9 @@ var myExport = {
             if (temp > breakPoints[0].min) {
                 callback(breakPoints[0]);
             }
+            else if (temp < breakPoints[breakPoints.length - 1].min){
+                callback(breakPoints[breakPoints.length - 1]);
+            }
             else{
                 for (var i = 1; i < breakPoints.length; i++) {
                 if (temp === breakPoints.min) {
@@ -48,8 +51,7 @@ var myExport = {
                         };
                     callback(returnObj);
                     }
-                }
-                callback(breakPoints[breakPoints.length - 1]);
+                }                
             }
             
         });
