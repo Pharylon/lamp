@@ -53,6 +53,7 @@ var myExport = {
     getTemperaturColors: function (zip, callback) {
         myExport.getTemperature(zip, function (temp) {
             temp = Math.round(temp);
+            temp = 70;
             if (temp > breakPoints[0].min) {
                 callback(breakPoints[0]);
                 return;
