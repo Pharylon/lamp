@@ -1,27 +1,32 @@
 <html>
-  <head>
-    <title>Socket Test</title>
-    <link rel="stylesheet" type="text/css" href="colorPicker.css">
-    <script src="script.js"></script>
-  </head>
-  <body>
-    <div class="container">
-            <!-- colorpicker element -->
-            <div class="colorpicker">
-                <canvas id="picker" var="1" width="300" height="300"></canvas>
 
-                <div class="controls">
-                    <div><label>R</label> <input type="text" id="rVal" /></div>
-                    <div><label>G</label> <input type="text" id="gVal" /></div>
-                    <div><label>B</label> <input type="text" id="bVal" /></div>
-                    <div><label>RGB</label> <input type="text" id="rgbVal" /></div>
-                    <div><label>HEX</label> <input type="text" id="hexVal" /></div>
-                </div>
-                <div id="preview" class="preview"></div>
-            </div>
-        </div>
-    <div style="display: inline-block; vertical-align: top">
-        <input id="stopbtn" type="button" value="Off"></input>
+<head>
+  <title>Socket Test</title>
+  <link rel="stylesheet" type="text/css" href="colorPicker.css">
+  <script src="colorPicker.js"></script>
+</head>
+
+<body>
+  <div class="select">
+    <select id="mode-select" onchange="changeMode()">
+      <option value="manual">Manual</option>
+      <option value="weather">Weather</option>
+    </select>
+  </div>
+  <div id="color-picker-container" class="container">
+    <!-- colorpicker element -->
+    <div class="colorpicker">
+      <canvas id="picker" var="1" width="300" height="300"></canvas>
+      <div class="controls">
+        <div><label>R</label> <input type="text" id="rVal" /></div>
+        <div><label>G</label> <input type="text" id="gVal" /></div>
+        <div><label>B</label> <input type="text" id="bVal" /></div>
+        <div><label>RGB</label> <input type="text" id="rgbVal" /></div>
+        <div><label>HEX</label> <input type="text" id="hexVal" /></div>
+      </div>
+      <div id="preview" class="preview"></div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>

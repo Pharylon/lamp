@@ -1,12 +1,9 @@
 var WebSocketServer = require('websocket').server;
-var PythonShell = require('python-shell');
-var path = require('path');
-var devEnvironment = process.env.NODE_ENV === "development";
-var pythonFile = path.join("python", devEnvironment ? "print.py" : "lamp.py");
+var lights = require("./lights");
+var weather = require("./weather");
 
+var weatherInterval = null;
 
-//Set color to red at boot
-PythonShell.run(pythonFile, { args: [255, 0, 2] }, function(){});
 
 module.exports = {
   createSocket: function (server) {
@@ -38,17 +35,17 @@ module.exports = {
         console.log((new Date()) + ' Lamp Connection accepted.');
         lampConnection.on('message', function (message) {
           if (message.type === 'utf8') {
-            var rgb = JSON.parse(message.utf8Data);
-            PythonShell.run(pythonFile, { args: [rgb.red, rgb.green, rgb.blue] }, function (err, results) {
-              if (err){
-                console.error(err)
-              }
-              else{
-                // results is an array consisting of messages collected during execution
-                console.log('results: %j', results);
-              }              
-            });
-            //lampConnection.sendUTF(message.utf8Data);
+            if (weatherInterval){
+              clearInterval(weatherInterval);
+            }
+            var myJson = JSON.parse(message.utf8Data);
+            if (myJson.mode === "manual"){
+              lights(myJson.red, myJson.green, myJson.blue);
+            }
+            else if (myJson.mode === "weather"){
+              setTemperateColor();
+              weatherInterval = setInterval(setTemperateColor, 1000 * 60 * 5);
+            }
           }
         });
         lampConnection.on('close', function (reasonCode, description) {
@@ -58,8 +55,14 @@ module.exports = {
       catch (err) {
         console.log(err);
       }
-
-
     });
   }
+}
+
+
+function setTemperateColor(){
+  console.log("Getting Temp");
+  weather.getTemperaturColors(function(tempColor){
+    lights(tempColor.red, tempColor.green, tempColor.blue);
+  });  
 }
