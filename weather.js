@@ -4,7 +4,7 @@ var http = require('http');
 
 var breakPoints = [
     { min: 100, red: 255, green: 0, blue: 0 },
-    { min: 70, red: 255, green: 255, blue: 0 },
+    { min: 70, red: 255, green: 85, blue: 0 },
     { min: 50, red: 0, green: 255, blue: 0 },
     { min: 32, red: 0, green: 0, blue: 255 }
 ];
@@ -50,21 +50,26 @@ var myExport = {
 
     },
 
-    getTemperaturColors: function (zip, callback) {
+    getTemperatureColors: function (zip, callback) {
         myExport.getTemperature(zip, function (temp) {
-            temp = Math.round(temp);
             if (temp > breakPoints[0].min) {
-                callback(breakPoints[0]);
+                if (callback){
+                    callback(breakPoints[0]);
+                }                
                 return;
             }
             else if (temp < breakPoints[breakPoints.length - 1].min) {
-                callback(breakPoints[breakPoints.length - 1]);
+                if (callback){
+                    callback(breakPoints[breakPoints.length - 1]);
+                }                
                 return;
             }
             else {
                 for (var i = 1; i < breakPoints.length; i++) {
                     if (temp === breakPoints[i].min) {
-                        callback(breakPoints[i]);
+                        if (callback){
+                            callback(breakPoints[i]);
+                        }                        
                         return;
                     }
                     if (temp > breakPoints[i].min) {
@@ -75,12 +80,13 @@ var myExport = {
                             blue: getBetweenColor(minRange.blue, maxRange.blue, temp, minRange.min, maxRange.min),
                             green: getBetweenColor(minRange.green, maxRange.green, temp, minRange.min, maxRange.min)
                         };
-                        callback(returnObj);
+                        if (callback){
+                            callback(returnObj);
+                        }                        
                         return;
                     }
                 }
             }
-
         });
     }
 };
@@ -99,14 +105,30 @@ function getBetweenColor(colorStart, colorEnd, currentTemp, tempMin, tempMax) {
     var colorRange = Math.abs(colorStart - colorEnd);
     var tempRange = tempMax - tempMin;
     var colorSliceSize = colorRange / tempRange;
-    var numOfColorIncrements;
-    if (colorStart > colorEnd) {
-        numOfColorIncrements = tempMax - currentTemp;
+    var numOfSlices = currentTemp - tempMin;
+    var offset = colorSliceSize * numOfSlices;
+    var color;
+    if (colorStart > colorEnd){
+        color = colorStart - offset;
     }
-    else {
-        numOfColorIncrements = currentTemp - tempMin;
+    else{
+        color = colorStart + offset;
     }
-    return Math.round(colorSliceSize * numOfColorIncrements);
+    //var color = Math.min(colorStart, colorEnd) + offset;
+    color = ~~color;
+    return color;
+
+
+    // var numOfColorIncrements;
+    // if (colorStart > colorEnd) {
+    //     numOfColorIncrements = tempMax - currentTemp;
+    // }
+    // else {
+    //     numOfColorIncrements = currentTemp - tempMin;
+    // }
+    // var offset = colorSliceSize * numOfColorIncrements;
+    // var colorSet = colorStart + offset;
+    // return colorSet;
 }
 
 module.exports = myExport;
