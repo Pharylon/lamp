@@ -62,7 +62,7 @@ module.exports = {
 
 function setTemperateColor(zip){
   console.log("Getting Temp");
-  weather.getTemperaturColors(zip, function(tempColor){
+  weather.getTemperatureColors(zip, function(tempColor){
     lights(tempColor.red, tempColor.green, tempColor.blue);
   });  
 }
