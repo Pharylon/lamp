@@ -82,10 +82,36 @@ header a, a:visited {
 
 .select{
     text-align: center;
-    align-content: center;
     font-size: 1.5em;
 }
 
 #mode-select{
     font: inherit;
+}
+
+.zip-container{
+    align-content: center;
+    text-align: center;
+    font-size: 2em;
+    display: none;
+    margin-top: 20px;
+    max-width: 100px;
+    font-size: inherit;
+}
+
+.zip-input{
+    font-size: 1.5em;
+    width: 100px;
+    margin-bottom: 10px;
+}
+
+.outer-zip{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+
+.btn{
+    font-size: 1.5em;
 }
