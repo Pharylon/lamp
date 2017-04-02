@@ -11,7 +11,13 @@
     <select id="mode-select" onchange="changeMode()">
       <option value="manual">Manual</option>
       <option value="weather">Weather</option>
-    </select>
+    </select><br/>
+  </div>
+  <div class="outer-zip">
+    <div id="zip-div" class="zip-container">
+        <input class="zip-input" type="text" id="zip" placeholder="Zip Code"/>
+        <button class="btn" type="submit" onclick="setWeather()">Submit</button>
+    </div>
   </div>
   <div id="color-picker-container" class="container">
     <!-- colorpicker element -->

@@ -43,7 +43,7 @@ module.exports = {
               lights(myJson.red, myJson.green, myJson.blue);
             }
             else if (myJson.mode === "weather"){
-              setTemperateColor();
+              setTemperateColor(myJson.zip);
               weatherInterval = setInterval(setTemperateColor, 1000 * 60 * 5);
             }
           }
@@ -60,9 +60,9 @@ module.exports = {
 }
 
 
-function setTemperateColor(){
+function setTemperateColor(zip){
   console.log("Getting Temp");
-  weather.getTemperaturColors(function(tempColor){
+  weather.getTemperaturColors(zip, function(tempColor){
     lights(tempColor.red, tempColor.green, tempColor.blue);
   });  
 }

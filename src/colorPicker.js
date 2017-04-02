@@ -6,7 +6,11 @@ var socket;
 
 function init(){
   initializeSocket();
-  initializeColorPicker();  
+  initializeColorPicker();
+  var previousZip = localStorage.getItem("zip");
+  if (zip){
+      document.getElementById("zip").value = previousZip;
+  }
   //initStopBtn();
 }
 
@@ -164,16 +168,26 @@ function changeMode(){
     var selectValue = modeSelect.options[modeSelect.selectedIndex].value;
     if (selectValue === "manual"){
         document.getElementById("color-picker-container").style.display = "block";
+        document.getElementById("zip-div").style.display = "none";
     }
     else{
         document.getElementById("color-picker-container").style.display = "none";
-        var myJson = JSON.stringify({
-            mode: "weather"
-        });
-        if (!socket){
-            initializeSocket();
-        }
-        socket.send(myJson);
+        document.getElementById("zip-div").style.display = "inline";
     }
+}
 
+function setWeather(){
+    var myZip = document.getElementById("zip").value;
+    if (!myZip || myZip.length !== 5){
+        alert("Missing or invalid zip code");
+    }
+    localStorage.setItem("zip", myZip);
+    var myJson = JSON.stringify({
+        zip: myZip,
+        mode: "weather"
+    });
+    if (!socket){
+        initializeSocket();
+    }
+    socket.send(myJson);
 }
