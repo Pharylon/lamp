@@ -20,8 +20,6 @@ var server = http.createServer(function(request, response) {
     fileName = path.join(fileName, request.url);
   }
   var mimeType = mimeHelper(fileName);
-  console.log(__dirname);
-  console.log(fileName);
 
   fs.readFile(fileName, function(err, data){
     if (err){
