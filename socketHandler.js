@@ -44,7 +44,9 @@ module.exports = {
             }
             else if (myJson.mode === "weather"){
               setTemperateColor(myJson.zip);
-              weatherInterval = setInterval(setTemperateColor, 1000 * 60 * 5);
+              weatherInterval = setInterval(function(){
+                setTemperateColor(myJson.zip);
+              }, 1000 * 60 * 5);
             }
           }
         });
