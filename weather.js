@@ -28,6 +28,9 @@ var myExport = {
                     response.on("end", function () {
                         try{
                             var data = JSON.parse(str);
+                            if (!data || !data.main){
+                                console.log("Something went wrong getting temperature. Recieved this response: " + str);
+                            }
                             console.log("Current temperature is: " + data.main.temp);
                             if (callback && data && data.main && data.main.temp) {
                                 callback(data.main.temp);

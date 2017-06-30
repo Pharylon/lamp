@@ -44,14 +44,3 @@ server.listen(port, function() {
 });
 
 socketBuilder.createSocket(server);
-
-function startUpHeartBeat(){
-  setTimeout(function(){
-    var success = heartBeat();
-    if (!success){
-      startUpHeartBeat();
-    }
-  }, 60 * 1000)
-}
-
-setInterval(heartBeat, 1000 * 60 * 60);
