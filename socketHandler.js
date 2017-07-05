@@ -69,7 +69,7 @@ var socketHandler = {
 }
 
 function setTemperateColor(zip) {
-  console.log("Getting Temp");
+  console.log("Getting Temp for" + zip);
   weather.getTemperatureColors(zip, function (tempColor) {
     lights(tempColor.red, tempColor.green, tempColor.blue);
   });
