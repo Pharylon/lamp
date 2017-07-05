@@ -41,4 +41,10 @@ module.exports = {
             }            
         });
     },
+
+    clearSettings: function(){
+        fs.unlink(saveFileLoc, function(err){
+            console.log("Error deleting settings file: " + err);
+        });
+    }
 }
