@@ -17,6 +17,9 @@ var myExport = {
             var url = getUrl(zip);
             http.get(url, function (response) {
                 try {
+                    if (response.statusCode !== 200){
+                        return console.log("Error getting temp. Status code: " + response.statusCode);
+                    }
                     var str = "";
                     response.on("data", function (chunk) {
                         try{

@@ -3,7 +3,7 @@ var lights = require("./lights");
 var weather = require("./weather");
 var settings = require("./settings");
 
-var weatherInterval = null;
+var _weatherInterval = null;
 
 
 var socketHandler = {
@@ -36,8 +36,8 @@ var socketHandler = {
         console.log((new Date()) + ' Lamp Connection accepted.');
         lampConnection.on('message', function (message) {
           if (message.type === 'utf8') {
-            if (weatherInterval) {
-              clearInterval(weatherInterval);
+            if (_weatherInterval) {
+              clearInterval(_weatherInterval);
             }
             var myJson = JSON.parse(message.utf8Data);
             socketHandler.setMode(myJson);
@@ -60,7 +60,7 @@ var socketHandler = {
     }
     else if (myJson.mode === "weather") {
       setTemperateColor(myJson.zip);
-      weatherInterval = setInterval(function () {
+      _weatherInterval = setInterval(function () {
         setTemperateColor(myJson.zip);
       }, 1000 * 60 * 5);
     }
