@@ -1,9 +1,10 @@
 var fs = require('fs');
+var path = require("path");
 
-var saveFileLoc = "~/.lampConfig";
-if (process.env.APPDATA) {
-    saveFileLoc = process.env.APPDATA + "\\.lampConfig";
-}
+var saveFileLoc = path.join(__dirname, "settings.json");
+//if (process.env.APPDATA) {
+//    saveFileLoc = process.env.APPDATA + "\\.lampConfig";
+//}
 
 console.log("Settings file location is: " + saveFileLoc);
 
