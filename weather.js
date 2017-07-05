@@ -3,9 +3,11 @@ var http = require('http');
 //var url = "http://api.openweathermap.org/data/2.5/weather?zip=28021,us&appid=85278d8f4b15c3cd088fbb1488845963&units=imperial";
 
 var breakPoints = [
-    { min: 100, red: 255, green: 0, blue: 0 },
-    { min: 70, red: 255, green: 85, blue: 0 },
-    { min: 50, red: 0, green: 255, blue: 0 },
+    { min: 100, red: 255, green: 0, blue: 255 },
+    { min: 90, red: 255, green: 0, blue: 0 },
+    { min: 80, red: 255, green: 85, blue: 0 },
+    { min: 70, red: 0, green: 255, blue: 0 },
+    { min: 60, red: 0, green: 255, blue: 255 },
     { min: 32, red: 0, green: 0, blue: 255 }
 ];
 
