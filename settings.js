@@ -5,6 +5,8 @@ if (process.env.APPDATA) {
     saveFileLoc = process.env.APPDATA + "\\.lampConfig";
 }
 
+console.log("Settings file location is: " + saveFileLoc);
+
 var settings = null;
 
 module.exports = {
