@@ -40,7 +40,8 @@ var socketHandler = {
               clearInterval(weatherInterval);
             }
             var myJson = JSON.parse(message.utf8Data);
-            socketHandler.setMode(myJson)
+            socketHandler.setMode(myJson);
+            saveSettingOnTimeout(myJson);
           }
         });
         lampConnection.on('close', function (reasonCode, description) {
@@ -56,10 +57,8 @@ var socketHandler = {
   setMode: function (myJson) {
     if (myJson.mode === "manual") {
       lights(myJson.red, myJson.green, myJson.blue);
-      saveManualSettingsOnTimeout(myJson);
     }
     else if (myJson.mode === "weather") {
-      settings.saveSettings(myJson);
       setTemperateColor(myJson.zip);
       weatherInterval = setInterval(function () {
         setTemperateColor(myJson.zip);
@@ -69,14 +68,14 @@ var socketHandler = {
 }
 
 function setTemperateColor(zip) {
-  console.log("Getting Temp for" + zip);
+  console.log("Getting Temp for " + zip);
   weather.getTemperatureColors(zip, function (tempColor) {
     lights(tempColor.red, tempColor.green, tempColor.blue);
   });
 }
 
 var _settingsSaveTimeout = null;
-function saveManualSettingsOnTimeout(json){
+function saveSettingOnTimeout(json){
   if (_settingsSaveTimeout){
     clearTimeout(_settingsSaveTimeout);
   }

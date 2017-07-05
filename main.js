@@ -49,7 +49,9 @@ socketBuilder.createSocket(server);
 try {
   settings.getSettings(function (settings) {
     if (settings) {
-      socketBuilder.setMode(settings);
+      setTimeout(function(){
+        socketBuilder.setMode(settings);
+      }, 1000);      
     }
   });
 }
