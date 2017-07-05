@@ -5,6 +5,7 @@ var path = require('path');
 var socketBuilder = require('./socketHandler');
 var mimeHelper = require('./mimeHelper');
 var heartBeat = require("./heartbeat.js");
+var settings = require("./settings");
 
 var devEnvironment = process.env.NODE_ENV === "development";
 
@@ -44,3 +45,9 @@ server.listen(port, function() {
 });
 
 socketBuilder.createSocket(server);
+
+settings.getSettings(function(settings){
+  if (settings){
+    socketBuilder.setMode(settings);
+  }  
+});

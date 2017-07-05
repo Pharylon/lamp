@@ -6,7 +6,7 @@ var PythonShell = require('python-shell');
 
 
 //Set color to red at boot
-PythonShell.run(pythonFile, { args: [255, 0, 2] }, function(){});
+//PythonShell.run(pythonFile, { args: [255, 0, 2] }, function(){});
 
 module.exports = function(red, green, blue){
     PythonShell.run(pythonFile, { args: [red, green, blue] }, function (err, results) {
