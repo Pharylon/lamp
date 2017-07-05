@@ -82,7 +82,7 @@ function saveManualSettingsOnTimeout(json){
   }
   _settingsSaveTimeout = setTimeout(function(){
     settings.saveSettings(json);
-  }, 1000);
+  }, 200);
 }
 
 module.exports = socketHandler;
