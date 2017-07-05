@@ -17,6 +17,7 @@ module.exports = {
         else {
             fs.readFile(saveFileLoc, function (err, data) {
                 if (err) {
+                    console.log("Error reading settings: ", err);
                     callback(false);
                 }
                 else{
@@ -31,7 +32,7 @@ module.exports = {
         var json = JSON.stringify(newSettings);
         fs.writeFile(saveFileLoc, json, function (err) {
             if (err) {
-                return console.log(err);
+                return console.log("Error saving settings: ", err);
             }
             settings = newSettings;
             if (callback){
