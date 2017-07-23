@@ -6,7 +6,7 @@ var breakPoints = [
     { min: 100, red: 255, green: 0, blue: 255 },
     { min: 90, red: 255, green: 0, blue: 0 },
     { min: 80, red: 255, green: 85, blue: 0 },
-    { min: 70, red: 0, green: 255, blue: 0 },
+    { min: 70, red: 0, green: 200, blue: 0 },
     { min: 60, red: 0, green: 255, blue: 255 },
     { min: 32, red: 0, green: 0, blue: 255 }
 ];
